@@ -1,1 +1,1 @@
-# kazak
+# Kazak kiril/latin çeviri
