@@ -41,11 +41,6 @@ const cyrillicToLatinMap = {};
 for (const [latin, cyril] of Object.entries(latinToCyrillicMap)) {
   if (!cyrillicToLatinMap[cyril]) cyrillicToLatinMap[cyril] = latin;
 }
-// Explicitly ensure И/и and Й/й map back to İ/i
-cyrillicToLatinMap["И"] = "İ";
-cyrillicToLatinMap["и"] = "i";
-cyrillicToLatinMap["Й"] = "İ";
-cyrillicToLatinMap["й"] = "i";
 
 // Conversion functions
 function latinToCyrillic(input) {
@@ -97,7 +92,7 @@ function changeFont(id, delta) {
   const ta = document.getElementById(id);
   const currentSize = parseInt(window.getComputedStyle(ta).fontSize, 10) || 16;
   let newSize = currentSize + delta;
-  if (newSize < 8) newSize = 8;
+  if (newSize < 12) newSize = 12;
   if (newSize > 48) newSize = 48;
   ta.style.fontSize = newSize + 'px';
 }
