@@ -55,11 +55,14 @@
       background: #ddd;
     }
     
-    .caps-toggle.active {
-      font-weight: bold;
-      background-color: #e0e0e0;
+    .caps-toggle {
     }
-    
+
+    .caps-toggle.active {
+      text-decoration: underline 2px;
+      color: #000;
+    }
+
 /* This targets the corner grip in Webkit browsers (Chrome, Safari, Edge) */
 textarea::-webkit-resizer {
   /* Make the grip larger and more visible */
@@ -110,7 +113,7 @@ textarea::-webkit-resizer {
   <button class="turkish-char" data-char="ş">ş</button>
 </div>
 
-<div class="note">Cyrillic ш → ş, ч → ç, ы → ı. Back-conversion ş/ç/ı and sh/ch/y.</div>
+<div class="note"><code>Key map: Ç⇾Ч, Ğ⇾Ғ, I⇾Ы, Ö⇾Ө, Ş⇾Ш, Ü⇾Ү</code></div>
 
 <script src="kazaklatin.js"></script>
 
