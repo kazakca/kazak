@@ -7,7 +7,7 @@
   <style>
     body { font-family:sans-serif; padding:2%; padding-top:0px; background-color: #CCC; }
     label { display:block; margin-top:12px; font-weight:600; }
-    textarea { width:100%; min-height:160px; padding:8px; font-size:16px; box-sizing:border-box; }
+    textarea { resize:vertical; width:100%; min-width:360px; max-width:1200px; min-height:160px; padding:8px; font-size:16px; box-sizing:border-box; }
     .note { margin-top:10px; color:#555; font-size:13px; }
     .font-controls { display: inline-block; margin-left: 10px; }
     .font-controls button { font-size: 14px; padding: 2px 8px; }
@@ -39,7 +39,7 @@
       font-family: inherit;
       font-size: 16px;
       padding: 5px;
-      min-width: 40px;
+      min-width: 38px;
       transition: background 0.2s;
     }
     
@@ -55,6 +55,14 @@
       font-weight: bold;
       background-color: #e0e0e0;
     }
+    
+/* This targets the corner grip in Webkit browsers (Chrome, Safari, Edge) */
+textarea::-webkit-resizer {
+  /* Make the grip larger and more visible */
+  width: 20px;
+  border: 1px solid #FFF;
+  background: #666;
+}
   </style>
 </head>
 <body>
