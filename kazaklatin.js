@@ -1,47 +1,54 @@
 // --- Official mapping ---
-const latinToCyrillicMap = {
-"A":"А", "a":"а",
-"Ə":"Ә", "ə":"ә",
-"B":"Б", "b":"б",
-"V":"В", "v":"в",
-"G":"Г", "g":"г",
-"Ğ":"Ғ", "ğ":"ғ",
-"D":"Д", "d":"д",
-"E":"Е", "e":"е",
-"J":"Ж", "j":"ж",
-"Z":"З", "z":"з",
-"İ":"И", "i":"и",
-"Y":"Й", "y":"й",
-"I":"І", "ı":"і",
-"K":"К", "k":"к",
-"Q":"Қ", "q":"қ",
-"L":"Л", "l":"л",
-"M":"М", "m":"м",
-"N":"Н", "n":"н",
-"Ñ":"Ң", "ñ":"ң",
-"O":"О", "o":"о",
-"Ö":"Ө", "ö":"ө",
-"P":"П", "p":"п",
-"R":"Р", "r":"р",
-"S":"С", "s":"с",
-"T":"Т", "t":"т",
-"U":"У", "u":"у",
-"Ü":"Ү", "ü":"ү",
-"Ū":"Ұ", "ū":"ұ",
-"F":"Ф", "f":"ф",
-"H":"Х", "h":"х",
-"H":"Һ", "h":"һ",
-"Ç":"Ч", "ç":"ч",
-"Ş":"Ш", "ş":"ш",
-"I":"Ы", "ı":"ы",
+const cyrillicToLatinMap = {
+"Э":"Ə", "э":"ə",
+"І":"İ", "і":"i",
+"Х":"H", "х":"h",
+"Ц":"S", "ц":"s",
+"Щ":"Ş", "щ":"ş",  
+"Ё":"Yo", "ё":"yu",
+"Ю":"Yu", "ю":"yu",
+"Я":"Ya", "я":"ya",
+
+"А":"A", "а":"a",
+"Ә":"Ə", "ә":"ə",
+"Б":"B", "б":"b",
+"В":"V", "в":"v",
+"Г":"G", "г":"g",
+"Ғ":"Ğ", "ғ":"ğ",
+"Д":"D", "д":"d",
+"Е":"E", "е":"e",
+"Ж":"J", "ж":"j",
+"З":"Z", "з":"z",
+"И":"İ", "и":"i",
+"Й":"Y", "й":"y",
+"К":"K", "к":"k",
+"Қ":"Q", "қ":"q",
+"Л":"L", "л":"l",
+"М":"M", "м":"m",
+"Н":"N", "н":"n",
+"Ң":"Ñ", "ң":"ñ",
+"О":"O", "о":"o",
+"Ө":"Ö", "ө":"ö",
+"П":"P", "п":"p",
+"Р":"R", "р":"r",
+"С":"S", "с":"s",
+"Т":"T", "т":"t",
+"У":"U", "у":"u",
+"Ұ":"Ū", "ұ":"ū",
+"Ү":"Ü", "ү":"ü",
+"Ф":"F", "ф":"f",
+"Һ":"H", "һ":"h",
+"Ч":"Ç", "ч":"ç",
+"Ш":"Ş", "ш":"ş",
+"Ы":"I", "ы":"ı",
+"Ъ":"'", "ъ":"'",
+"Ь":"'", "ь":"'",
 };
-
 // Build reverse map automatically
-const cyrillicToLatinMap = {};
-for (const [latin, cyril] of Object.entries(latinToCyrillicMap)) {
-  if (!cyrillicToLatinMap[cyril]) cyrillicToLatinMap[cyril] = latin;
+const latinToCyrillicMap = {};
+for (const [cyril, latin] of Object.entries(cyrillicToLatinMap)) {
+  latinToCyrillicMap[latin] = cyril;
 }
-
 // Conversion functions
 function latinToCyrillic(input) {
   return input.split("").map(ch => latinToCyrillicMap[ch] || ch).join("");
@@ -49,16 +56,13 @@ function latinToCyrillic(input) {
 function cyrillicToLatin(input) {
   return input.split("").map(ch => cyrillicToLatinMap[ch] || ch).join("");
 }
-
 // --- UI wiring ---
 const latinArea = document.getElementById('latin');
 const kirilArea = document.getElementById('kiril');
 const enableCyrilToLatin = document.getElementById('enable-cyril-to-latin');
 const enableLatinToCyril = document.getElementById('enable-latin-to-cyril');
-
 let updatingKiril = false;
 let updatingLatin = false;
-
 function handleLatinInput() {
   if (updatingKiril) return;
   if (enableLatinToCyril.checked) {
@@ -77,7 +81,6 @@ function handleKirilInput() {
 }
 latinArea.addEventListener('input', handleLatinInput);
 kirilArea.addEventListener('input', handleKirilInput);
-
 enableCyrilToLatin.addEventListener('change', () => {
   if (enableCyrilToLatin.checked) handleKirilInput();
   else latinArea.value = '';
@@ -86,7 +89,6 @@ enableLatinToCyril.addEventListener('change', () => {
   if (enableLatinToCyril.checked) handleLatinInput();
   else kirilArea.value = '';
 });
-
 // --- Buttons ---
 function changeFont(id, delta) {
   const ta = document.getElementById(id);
@@ -113,7 +115,6 @@ function clearText(id) {
   if (id === 'kiril' && enableCyrilToLatin.checked) handleKirilInput();
   else if (id === 'latin' && enableLatinToCyril.checked) handleLatinInput();
 }
-
 // --- Turkish keyboard ---
 function insertAtCursor(textarea, text) {
   const start = textarea.selectionStart;
