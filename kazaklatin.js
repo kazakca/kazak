@@ -33,7 +33,7 @@ const cyrillicToLatinMap = {
 "Р":"R", "р":"r",
 "С":"S", "с":"s",
 "Т":"T", "т":"t",
-"У":"W", "у":"w",
+"У":"U", "у":"u",
 "Ү":"Ü", "ү":"ü",
 "Ұ":"U", "ұ":"u",
 "Ф":"F", "ф":"f",
@@ -44,6 +44,7 @@ const cyrillicToLatinMap = {
 "Ъ":"'", "ъ":"'",
 "Ь":"'", "ь":"'",
 };
+
 // Build reverse map automatically
 const latinToCyrillicMap = {};
 for (const [cyril, latin] of Object.entries(cyrillicToLatinMap)) {
@@ -89,6 +90,10 @@ enableLatinToCyril.addEventListener('change', () => {
   if (enableLatinToCyril.checked) handleLatinInput();
   else kirilArea.value = '';
 });
+// Initial conversion on page load if enabled
+if (enableCyrilToLatin.checked) {
+  handleKirilInput();
+}
 // --- Buttons ---
 function changeFont(id, delta) {
   const ta = document.getElementById(id);
