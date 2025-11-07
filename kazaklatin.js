@@ -1,4 +1,4 @@
-// --- Official mapping ---
+// --- Non-official mapping ---
 const cyrillicToLatinMap = {
 "Э":"Ə", "э":"ə",
 "Х":"H", "х":"h",
