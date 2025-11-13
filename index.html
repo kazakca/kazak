@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kazakh Latin ⇄ Cyrillic converter</title>
+  <title>Kazakh Cyrillic ⇄ Latin converter</title>
   <style>
     body { font-family:sans-serif; padding:2%; padding-top:0px; background-color: #CCC; }
     label { display:block; margin-top:12px; font-weight:600; }
@@ -74,7 +74,7 @@ textarea::-webkit-resizer {
 </head>
 <body>
 
-<h3><a href="./">Kazakh</a> Latin ⇄ Cyrillic converter <big>🇰🇿</big></h3>
+<h3><a href="./">Kazakh</a> Cyrillic ⇄ Latin converter <big>🇰🇿</big></h3>
 
 <label for="kiril">Cyrillic
   <span class="font-controls">
@@ -83,12 +83,10 @@ textarea::-webkit-resizer {
     <button onclick="copyText('kiril')">Copy</button>
     <button onclick="clearText('kiril')">Clear</button>
     <label class="conversion-toggle">
-      <input type="checkbox" id="enable-cyril-to-latin" checked>
-      Convert
-    </label>
+      <input type="checkbox" id="cyril2latin" checked>Convert</label>
   </span>
 </label>
-<textarea id="kiril" name="kiril" placeholder="Type Kazakh in Cyrillic here..." spellcheck="false">(sample text) Қазақстан — кең байтақ ел. Оның жері таулы, орманды, шөлді және өзенді аймақтардан тұрады. Еліміздің ең биік нүктесі — Хан Тәңірі шыңы, ал ең ұзын өзені — Ертіс. Қазақ халқы ежелден мал шаруашылығымен айналысқан: қой, жылқы, түйе, сиыр өсірген. 
+<textarea id="kiril" name="kiril" placeholder="Type Cyrillic here..." spellcheck="false">(sample text) Қазақстан — кең байтақ ел. Оның жері таулы, орманды, шөлді және өзенді аймақтардан тұрады. Еліміздің ең биік нүктесі — Хан Тәңірі шыңы, ал ең ұзын өзені — Ертіс. Қазақ халқы ежелден мал шаруашылығымен айналысқан: қой, жылқы, түйе, сиыр өсірген. 
 
 Қазақтың күйі, биі, үні мен тілі — бай мұра. Бұлтты аспан астында желмен тербелген дала — халқымыздың рухын бейнелейді.</textarea>
 
@@ -98,13 +96,12 @@ textarea::-webkit-resizer {
     <button onclick="changeFont('latin', -2)">-</button>
     <button onclick="copyText('latin')">Copy</button>
     <button onclick="clearText('latin')">Clear</button>
+    
     <label class="conversion-toggle">
-      <input type="checkbox" id="enable-latin-to-cyril">
-      Convert
-    </label>
+    <input type="checkbox" id="latin2cyril">Convert</label>
   </span>
 </label>
-<textarea id="latin" name="latin" placeholder="Type Kazakh in Latin here..." spellcheck="false"></textarea>
+<textarea id="latin" name="latin" placeholder="Type Latin here..." spellcheck="false"></textarea>
 <div class="turkish-keyboard" id="turkishKeyboard">
   <button class="caps-toggle" id="capsToggle">Caps</button>
   <button class="turkish-char" data-char="ç">ç</button>
