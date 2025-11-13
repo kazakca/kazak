@@ -33,7 +33,7 @@ const cyrillicToLatinMap = {
 "Р":"R", "р":"r",
 "С":"S", "с":"s",
 "Т":"T", "т":"t",
-"У":"U", "у":"u",
+"У":"Uv", "у":"uv",
 "Ү":"Ü", "ү":"ü",
 "Ұ":"U", "ұ":"u",
 "Ф":"F", "ф":"f",
@@ -50,6 +50,7 @@ const latinToCyrillicMap = {};
 for (const [cyril, latin] of Object.entries(cyrillicToLatinMap)) {
   latinToCyrillicMap[latin] = cyril;
 }
+
 // Conversion functions
 function latinToCyrillic(input) {
   return input.split("").map(ch => latinToCyrillicMap[ch] || ch).join("");
@@ -57,13 +58,22 @@ function latinToCyrillic(input) {
 function cyrillicToLatin(input) {
   return input.split("").map(ch => cyrillicToLatinMap[ch] || ch).join("");
 }
+
 // --- UI wiring ---
 const latinArea = document.getElementById('latin');
 const kirilArea = document.getElementById('kiril');
-const enableCyrilToLatin = document.getElementById('enable-cyril-to-latin');
-const enableLatinToCyril = document.getElementById('enable-latin-to-cyril');
+const enableCyrilToLatin = document.getElementById('cyril2latin');
+const enableLatinToCyril = document.getElementById('latin2cyril');
+
+// Ensure mutual exclusivity on page load (in case HTML has both checked)
+if (enableCyrilToLatin.checked && enableLatinToCyril.checked) {
+  enableLatinToCyril.checked = false;
+}
+
 let updatingKiril = false;
 let updatingLatin = false;
+let programmaticChange = false; // NEW: Flag to prevent recursive triggers
+
 function handleLatinInput() {
   if (updatingKiril) return;
   if (enableLatinToCyril.checked) {
@@ -72,6 +82,7 @@ function handleLatinInput() {
     updatingKiril = false;
   }
 }
+
 function handleKirilInput() {
   if (updatingLatin) return;
   if (enableCyrilToLatin.checked) {
@@ -80,20 +91,45 @@ function handleKirilInput() {
     updatingLatin = false;
   }
 }
+
 latinArea.addEventListener('input', handleLatinInput);
 kirilArea.addEventListener('input', handleKirilInput);
+
 enableCyrilToLatin.addEventListener('change', () => {
-  if (enableCyrilToLatin.checked) handleKirilInput();
-  else latinArea.value = '';
+  if (programmaticChange) return; // Ignore programmatic changes
+  
+  if (enableCyrilToLatin.checked) {
+    // Uncheck the other box programmatically
+    programmaticChange = true;
+    enableLatinToCyril.checked = false;
+    programmaticChange = false;
+    handleKirilInput();
+  } else {
+    latinArea.value = '';
+  }
 });
+
 enableLatinToCyril.addEventListener('change', () => {
-  if (enableLatinToCyril.checked) handleLatinInput();
-  else kirilArea.value = '';
+  if (programmaticChange) return; // Ignore programmatic changes
+  
+  if (enableLatinToCyril.checked) {
+    // Uncheck the other box programmatically
+    programmaticChange = true;
+    enableCyrilToLatin.checked = false;
+    programmaticChange = false;
+    handleLatinInput();
+  } else {
+    kirilArea.value = '';
+  }
 });
+
 // Initial conversion on page load if enabled
 if (enableCyrilToLatin.checked) {
   handleKirilInput();
+} else if (enableLatinToCyril.checked) {
+  handleLatinInput();
 }
+
 // --- Buttons ---
 function changeFont(id, delta) {
   const ta = document.getElementById(id);
