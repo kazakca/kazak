@@ -70,38 +70,49 @@ textarea::-webkit-resizer {
   border-right: 2px solid #FFF;
   background: #0BB;
 }
+
+#custommap {
+  width:990px;
+  max-width:98%;
+  font-size:1rem;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
   </style>
 </head>
 <body>
 
 <h3><a href="./">Kazakh</a> Cyrillic ⇄ Latin converter <big>🇰🇿</big></h3>
 
-<label for="kiril">Cyrillic
+<label for="kiril">Cyril
   <span class="font-controls">
     <button onclick="changeFont('kiril', 2)">+</button>
     <button onclick="changeFont('kiril', -2)">-</button>
     <button onclick="copyText('kiril')">Copy</button>
     <button onclick="clearText('kiril')">Clear</button>
-    <label class="conversion-toggle">
-      <input type="checkbox" id="cyril2latin" checked>Convert</label>
+    <label class="conversion-toggle"><input type="checkbox" id="cyril2latin" checked>Convert</label>
   </span>
 </label>
+
 <textarea id="kiril" name="kiril" placeholder="Type Cyrillic here..." spellcheck="false">(sample text) Қазақстан — кең байтақ ел. Оның жері таулы, орманды, шөлді және өзенді аймақтардан тұрады. Еліміздің ең биік нүктесі — Хан Тәңірі шыңы, ал ең ұзын өзені — Ертіс. Қазақ халқы ежелден мал шаруашылығымен айналысқан: қой, жылқы, түйе, сиыр өсірген. 
 
 Қазақтың күйі, биі, үні мен тілі — бай мұра. Бұлтты аспан астында желмен тербелген дала — халқымыздың рухын бейнелейді.</textarea>
+
+<div><input type="text" id="custommap" placeholder="Custom character map..." value="Қ=K Й=Y И=İY І=İ"></div>
 
 <label for="latin">Latin
   <span class="font-controls">
     <button onclick="changeFont('latin', 2)">+</button>
     <button onclick="changeFont('latin', -2)">-</button>
     <button onclick="copyText('latin')">Copy</button>
-    <button onclick="clearText('latin')">Clear</button>
-    
-    <label class="conversion-toggle">
-    <input type="checkbox" id="latin2cyril">Convert</label>
+    <button onclick="clearText('latin')">Clear</button> 
+    <label class="conversion-toggle"><input type="checkbox" id="latin2cyril">Convert</label>
   </span>
 </label>
+
 <textarea id="latin" name="latin" placeholder="Type Latin here..." spellcheck="false"></textarea>
+
 <div class="turkish-keyboard" id="turkishKeyboard">
   <button class="caps-toggle" id="capsToggle">Caps</button>
   <button class="turkish-char" data-char="ç">ç</button>
