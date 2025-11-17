@@ -1,1 +1,2 @@
-# Kazak Kiril/Katin çevirici (Kazakh Cyrillic/Latin converter)
+# Kazak Kiril / Latin çevirir
+# Kazakh Cyrillic / Latin converter
