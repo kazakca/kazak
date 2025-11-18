@@ -1,51 +1,49 @@
 // --- Non-official mapping ---
 const defaultCyrillicToLatinMap = {
-"Э":"Ə", "э":"ə",
-"Х":"H", "х":"h",
-"Ц":"S", "ц":"s",
-"Щ":"Ş", "щ":"ş",  
-"Ё":"Yo", "ё":"yu",
-"Ю":"Yu", "ю":"yu",
-"Я":"Ya", "я":"ya",
-"В":"V", "в":"v",
-
-"А":"A", "а":"a",
-"Ә":"Ä", "ә":"ä",
-"Б":"B", "б":"b",
-"Г":"G", "г":"g",
-"Ғ":"Ğ", "ғ":"ğ",
-"Д":"D", "д":"d",
-"Е":"E", "е":"e",
-"Ж":"J", "ж":"j",
-"З":"Z", "з":"z",
-"І":"I", "і":"ı",
-"И":"İ", "и":"i",
-"Й":"İ", "й":"i",
-"Қ":"Q", "қ":"q",
-"К":"K", "к":"k",
-"Л":"L", "л":"l",
-"М":"M", "м":"m",
-"Н":"N", "н":"n",
-"Ң":"Ñ", "ң":"ñ",
-"О":"O", "о":"o",
-"Ө":"Ö", "ө":"ö",
-"П":"P", "п":"p",
-"Р":"R", "р":"r",
-"С":"S", "с":"s",
-"Т":"T", "т":"t",
-"У":"Ū", "у":"ū",
-"Ү":"Ü", "ү":"ü",
-"Ұ":"U", "ұ":"u",
-"Ф":"F", "ф":"f",
-"Һ":"H", "һ":"h",
-"Ч":"Ç", "ч":"ç",
-"Ш":"Ş", "ш":"ş",
-"Ы":"I", "ы":"ı",
-"Ъ":"'", "ъ":"'",
-"Ь":"'", "ь":"'",
+  "Э": "Ə", "э": "ə",
+  "Х": "H", "х": "h",
+  "Ц": "S", "ц": "s",
+  "Щ": "Ş", "щ": "ş",
+  "Ё": "Yo", "ё": "yu",
+  "Ю": "Yu", "ю": "yu",
+  "Я": "Ya", "я": "ya",
+  "В": "V", "в": "v",
+  "А": "A", "а": "a",
+  "Ә": "Ä", "ә": "ä",
+  "Б": "B", "б": "b",
+  "Г": "G", "г": "g",
+  "Ғ": "Ğ", "ғ": "ğ",
+  "Д": "D", "д": "d",
+  "Е": "E", "е": "e",
+  "Ж": "J", "ж": "j",
+  "З": "Z", "з": "z",
+  "І": "I", "і": "ı",
+  "И": "İ", "и": "i",
+  "Й": "İ", "й": "i",
+  "Қ": "Q", "қ": "q",
+  "К": "K", "к": "k",
+  "Л": "L", "л": "l",
+  "М": "M", "м": "m",
+  "Н": "N", "н": "n",
+  "Ң": "Ñ", "ң": "ñ",
+  "О": "O", "о": "o",
+  "Ө": "Ö", "ө": "ö",
+  "П": "P", "п": "p",
+  "Р": "R", "р": "r",
+  "С": "S", "с": "s",
+  "Т": "T", "т": "t",
+  "У": "Ū", "у": "ū",
+  "Ү": "Ü", "ү": "ü",
+  "Ұ": "U", "ұ": "u",
+  "Ф": "F", "ф": "f",
+  "Һ": "H", "һ": "h",
+  "Ч": "Ç", "ч": "ç",
+  "Ш": "Ş", "ш": "ş",
+  "Ы": "I", "ы": "ı",
+  "Ъ": "'", "ъ": "'",
+  "Ь": "'", "ь": "'",
 };
-
-const cyrillicToLatinMap = {...defaultCyrillicToLatinMap};
+const cyrillicToLatinMap = { ...defaultCyrillicToLatinMap };
 // Build reverse map automatically
 const latinToCyrillicMap = {};
 let sortedLatinKeys = [];
@@ -57,14 +55,20 @@ function rebuildReverseMap() {
   sortedLatinKeys = Object.keys(latinToCyrillicMap).sort((a, b) => b.length - a.length);
 }
 rebuildReverseMap();
-
 // Custom mapping from input
 const customMapInput = document.getElementById('custommap');
+const defaultCustomMapValue = "Қ=K, Й=Y, И=İy, І=İ";
+
+// Load from localStorage on init
+const savedCustomMap = localStorage.getItem('customMap');
+if (savedCustomMap !== null) {
+  customMapInput.value = savedCustomMap;
+}
+
 function updateCustomMappings() {
   // Reset to default
   Object.keys(cyrillicToLatinMap).forEach(key => delete cyrillicToLatinMap[key]);
   Object.assign(cyrillicToLatinMap, defaultCyrillicToLatinMap);
-
   const customStr = customMapInput.value.trim();
   if (!customStr) {
     rebuildReverseMap();
@@ -108,6 +112,7 @@ updateCustomMappings();
 // Listen for changes to custommap
 customMapInput.addEventListener('input', () => {
   updateCustomMappings();
+  localStorage.setItem('customMap', customMapInput.value);
   // Trigger re-conversion if a direction is enabled
   if (enableCyrilToLatin.checked) {
     handleKirilInput();
@@ -115,7 +120,19 @@ customMapInput.addEventListener('input', () => {
     handleLatinInput();
   }
 });
-
+// Reset button
+const resetCustomMapButton = document.getElementById('resetCustomMap');
+resetCustomMapButton.addEventListener('click', () => {
+  customMapInput.value = defaultCustomMapValue;
+  localStorage.setItem('customMap', defaultCustomMapValue);
+  updateCustomMappings();
+  // Trigger re-conversion if a direction is enabled
+  if (enableCyrilToLatin.checked) {
+    handleKirilInput();
+  } else if (enableLatinToCyril.checked) {
+    handleLatinInput();
+  }
+});
 // Conversion functions
 function latinToCyrillic(input) {
   let result = '';
@@ -172,7 +189,6 @@ latinArea.addEventListener('input', handleLatinInput);
 kirilArea.addEventListener('input', handleKirilInput);
 enableCyrilToLatin.addEventListener('change', () => {
   if (programmaticChange) return; // Ignore programmatic changes
- 
   if (enableCyrilToLatin.checked) {
     // Uncheck the other box programmatically
     programmaticChange = true;
@@ -185,7 +201,6 @@ enableCyrilToLatin.addEventListener('change', () => {
 });
 enableLatinToCyril.addEventListener('change', () => {
   if (programmaticChange) return; // Ignore programmatic changes
- 
   if (enableLatinToCyril.checked) {
     // Uncheck the other box programmatically
     programmaticChange = true;
